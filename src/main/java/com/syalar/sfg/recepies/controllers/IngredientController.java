@@ -1,6 +1,8 @@
 package com.syalar.sfg.recepies.controllers;
 
 import com.syalar.sfg.recepies.commands.IngredientCommand;
+import com.syalar.sfg.recepies.commands.RecipeCommand;
+import com.syalar.sfg.recepies.commands.UnitOfMeasureCommand;
 import com.syalar.sfg.recepies.services.IngredientService;
 import com.syalar.sfg.recepies.services.RecipeService;
 import com.syalar.sfg.recepies.services.UnitOfMeasureService;
@@ -62,4 +64,16 @@ public class IngredientController {
         return "redirect:/recipe/" + savedIngredientCommand.getRecipeId() + "/ingredient/" + savedIngredientCommand.getId() + "/show";
     }
 
+    @GetMapping("/recipe/{recipeId}/ingredient/new")
+    public String newRecipeIngredient(@PathVariable String recipeId, Model model) {
+        log.debug("new ingredient");
+        RecipeCommand recipeCommand = recipeService.findCommandById(new Long(recipeId));
+        // todo raise exception if null
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+        model.addAttribute("ingredient", ingredientCommand);
+        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+        return "recipe/ingredient/ingredientform";
+    }
 }

@@ -1,14 +1,16 @@
 package com.syalar.sfg.recepies.domain;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 /**
  * Created by jd.rodriguez
  */
-@Data
+@Getter
+@Setter
 @Entity
 @EqualsAndHashCode(exclude="recipe")
 public class Notes {
