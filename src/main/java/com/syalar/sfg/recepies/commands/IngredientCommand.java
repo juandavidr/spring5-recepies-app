@@ -1,7 +1,7 @@
 package com.syalar.sfg.recepies.commands;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -11,11 +11,12 @@ import java.math.BigDecimal;
  */
 @Setter
 @Getter
-@EqualsAndHashCode(exclude = "recipe")
+@NoArgsConstructor
 public class IngredientCommand {
 
     private Long id;
     private String description;
     private BigDecimal amount;
     private UnitOfMeasureCommand uom;
+    private Long recipeId;
 }

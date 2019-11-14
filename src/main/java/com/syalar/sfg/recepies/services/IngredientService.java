@@ -7,4 +7,6 @@ import com.syalar.sfg.recepies.commands.IngredientCommand;
  */
 public interface IngredientService {
     IngredientCommand findByRecipeIdIngredientAndId(Long recipeId, Long ingredientId);
+
+    IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
 }

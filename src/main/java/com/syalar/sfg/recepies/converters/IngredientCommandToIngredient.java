@@ -2,6 +2,7 @@ package com.syalar.sfg.recepies.converters;
 
 import com.syalar.sfg.recepies.commands.IngredientCommand;
 import com.syalar.sfg.recepies.domain.Ingredient;
+import com.syalar.sfg.recepies.domain.Recipe;
 import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
@@ -30,6 +31,9 @@ public class IngredientCommandToIngredient implements Converter<IngredientComman
         ingredient.setUom(unitOfMeasureConverter.convert(source.getUom()));
         ingredient.setAmount(source.getAmount());
         ingredient.setDescription(source.getDescription());
+        Recipe recipe = new Recipe();
+        recipe.setId(source.getRecipeId());
+        ingredient.setRecipe(recipe);
 
         return ingredient;
     }
