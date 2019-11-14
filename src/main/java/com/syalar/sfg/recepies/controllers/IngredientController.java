@@ -26,7 +26,7 @@ public class IngredientController {
     private final UnitOfMeasureService unitOfMeasureService;
 
     public IngredientController(RecipeService recipeService,
-                                IngredientService ingredientService, UnitOfMeasureService unitOfMeasureService) {
+            IngredientService ingredientService, UnitOfMeasureService unitOfMeasureService) {
         this.recipeService = recipeService;
         this.ingredientService = ingredientService;
         this.unitOfMeasureService = unitOfMeasureService;
@@ -34,7 +34,7 @@ public class IngredientController {
 
     @GetMapping("/recipe/{id}/ingredients")
     public String getRecipeIngredients(@PathVariable String id, Model model) {
-        log.debug("getting recipe ingredients for re");
+        log.debug("getting recipe ingredients for recipe: " + id);
         model.addAttribute("recipe", recipeService.findCommandById(new Long(id)));
         return "recipe/ingredient/list";
     }
@@ -61,7 +61,8 @@ public class IngredientController {
         IngredientCommand savedIngredientCommand = ingredientService.saveIngredientCommand(ingredientCommand);
         log.debug("Saved recipeId:" + savedIngredientCommand.getRecipeId());
         log.debug("Saved ingredientId:" + savedIngredientCommand.getId());
-        return "redirect:/recipe/" + savedIngredientCommand.getRecipeId() + "/ingredient/" + savedIngredientCommand.getId() + "/show";
+        return "redirect:/recipe/" + savedIngredientCommand.getRecipeId() + "/ingredient/" + savedIngredientCommand
+                .getId() + "/show";
     }
 
     @GetMapping("/recipe/{recipeId}/ingredient/new")
@@ -75,5 +76,14 @@ public class IngredientController {
         model.addAttribute("ingredient", ingredientCommand);
         model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
         return "recipe/ingredient/ingredientform";
+    }
+
+    @GetMapping("/recipe/{recipeId}/ingredient/{id}/delete")
+    public String deleteIngredient(@PathVariable String recipeId, @PathVariable String id) {
+
+        log.debug("Deleting id: " + id);
+        ingredientService.deleteByRecipeIdAndId(Long.valueOf(recipeId), Long.valueOf(id));
+
+        return "redirect:/recipe/" + recipeId + "/ingredients";
     }
 }
