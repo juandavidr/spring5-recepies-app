@@ -2,6 +2,7 @@ package com.syalar.sfg.recepies.controllers;
 
 import com.syalar.sfg.recepies.commands.RecipeCommand;
 import com.syalar.sfg.recepies.domain.Recipe;
+import com.syalar.sfg.recepies.exceptions.NotFoundException;
 import com.syalar.sfg.recepies.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,6 +50,16 @@ public class RecipeControllerTest {
     }
 
     @Test
+    public void testGetRecipeNotFound() throws Exception {
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"));
+    }
+
+    @Test
     public void testGetNewRecipeForm() throws Exception {
         RecipeCommand command = new RecipeCommand();
 
@@ -65,7 +76,7 @@ public class RecipeControllerTest {
 
         when(recipeService.saveRecipeCommand(any())).thenReturn(command);
 
-        mockMvc.perform(post("/recipe/")
+        mockMvc.perform(post("/recipe")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("id", "")
                 .param("description", "some string")

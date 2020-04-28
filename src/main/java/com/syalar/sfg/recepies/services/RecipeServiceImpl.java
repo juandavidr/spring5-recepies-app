@@ -4,6 +4,7 @@ import com.syalar.sfg.recepies.commands.RecipeCommand;
 import com.syalar.sfg.recepies.converters.RecipeCommandToRecipe;
 import com.syalar.sfg.recepies.converters.RecipeToRecipeCommand;
 import com.syalar.sfg.recepies.domain.Recipe;
+import com.syalar.sfg.recepies.exceptions.NotFoundException;
 import com.syalar.sfg.recepies.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class RecipeServiceImpl implements RecipeService {
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe Not Found");
+            throw new NotFoundException("Recipe Not Found. For ID value: " + id.toString());
         }
         return recipeOptional.get();
     }

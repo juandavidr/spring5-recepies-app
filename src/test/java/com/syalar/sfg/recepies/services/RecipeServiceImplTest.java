@@ -1,8 +1,10 @@
 package com.syalar.sfg.recepies.services;
 
+import com.syalar.sfg.recepies.commands.RecipeCommand;
 import com.syalar.sfg.recepies.converters.RecipeCommandToRecipe;
 import com.syalar.sfg.recepies.converters.RecipeToRecipeCommand;
 import com.syalar.sfg.recepies.domain.Recipe;
+import com.syalar.sfg.recepies.exceptions.NotFoundException;
 import com.syalar.sfg.recepies.repositories.RecipeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +23,6 @@ import static org.mockito.Mockito.*;
  * Created by jd.rodriguez
  */
 public class RecipeServiceImplTest {
-
     RecipeServiceImpl recipeService;
 
     @Mock
@@ -55,6 +56,38 @@ public class RecipeServiceImplTest {
         verify(recipeRepository, never()).findAll();
     }
 
+    @Test(expected = NotFoundException.class)
+    public void getRecipeByIdTestNotFound() throws Exception {
+
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturned = recipeService.findById(1L);
+
+        //should go boom
+    }
+
+    @Test
+    public void getRecipeCommandByIdTest() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        when(recipeToRecipeCommand.convert(any())).thenReturn(recipeCommand);
+
+        RecipeCommand commandById = recipeService.findCommandById(1L);
+
+        assertNotNull("Null recipe returned", commandById);
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
+    }
+
     @Test
     public void getRecipesTest() throws Exception {
 
@@ -71,11 +104,11 @@ public class RecipeServiceImplTest {
         verify(recipeRepository, never()).findById(anyLong());
     }
 
-
     @Test
-    public void testDeleteById(){
+    public void testDeleteById() throws Exception {
+
         //given
-        Long idToDelete = 2L;
+        Long idToDelete = Long.valueOf(2L);
 
         //when
         recipeService.deleteById(idToDelete);
