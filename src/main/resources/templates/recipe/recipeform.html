@@ -42,7 +42,7 @@
                             <div class="form-row">
                                 <div class="col-md-3 form-group" th:class="${#fields.hasErrors('description')}
                                 ? 'col-md-3 form-group is-invalid ' : 'col-md-3 form-group'">
-                                    <label class="badge">Recipe Description:</label>
+                                    <label class="badge" th:text="#{recipe.description}">Recipe Description:</label>
                                     <input class="form-control" th:errorclass="is-invalid" th:field="*{description}"
                                            type="text"/>
                                     <div class="form-text invalid-feedback"
