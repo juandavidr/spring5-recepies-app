@@ -24,15 +24,14 @@
 <body>
 <!--/*@thymesVar id="recipe" type="com.syalar.sfg.recepies.domain.Recipe"*/-->
 <div class="container-fluid" style="margin-top: 20px">
-    <div class="row">
+    <div class="row justify-content-md-center">
         <div class="col-md-6 col-md-offset-3">
             <div class="pannel-group">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h1 class="panel-title" th:text="${recipe.description}">Recipe Description Here!</h1>
-
+                <div class="card border-primary">
+                    <div class="card-header bg-primary">
+                        <h1 class="card-title" th:text="${recipe.description}">Recipe Description Here!</h1>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-3">
                                 <h5>Categories:</h5>
@@ -97,13 +96,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">Ingredients</h1>
+                <div class="card border-primary">
+                    <div class="card-header bg-primary">
+                        <h5 class="card-title text-white">Ingredients</h5>
                         <a class="btn btn-default" href="#" role="button"
                            th:href="${'/recipe/'+recipe.id+'/ingredients'}">Edit</a>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <!--/*@thymesVar id="ingredient" type="com.syalar.sfg.recepies.domain.Ingredient"*/-->
@@ -117,11 +116,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">Directions</h1>
+                <div class="card border-primary">
+                    <div class="card-header bg-primary">
+                        <h5 class="card-title text-white">Directions</h5>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <p th:text="${recipe.directions}">Lorem ipsum dolor sit amet, consectetuer adipiscing
@@ -141,11 +140,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h1 class="panel-title">Notes</h1>
+                <div class="card border-primary">
+                    <div class="card-header bg-primary">
+                        <h5 class="card-title text-white">Notes</h5>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <p th:text="${recipe.notes.recipeNotes}">Lorem ipsum dolor sit amet, consectetuer
