@@ -38,10 +38,10 @@ jobs:
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
       # run tests!
-      - run: mvn integration-test cobertura:cobertura
+      - run: mvn  jacoco:prepare-agent integration-test verify
 
       - store_test_results:
-          path: target/surefire-reports
+          path: target/site/jacoco
 
       - run:
           name: Send To CodeCov
